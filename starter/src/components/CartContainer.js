@@ -1,11 +1,15 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { clearCart } from "../features/cart/cartSlice";
+import { calculateTotals, clearCart } from "../features/cart/cartSlice";
 import CartItem from "./CartItem";
 
 const CartContainer = () => {
   const dispatch = useDispatch();
   const { cartItems, total, amount } = useSelector((store) => store.cart);
+
+  useEffect(() => {
+    dispatch(calculateTotals());
+  }, [dispatch, cartItems]);
 
   if (amount < 1) {
     return (
